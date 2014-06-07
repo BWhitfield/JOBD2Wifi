@@ -2,6 +2,7 @@ package com;
 
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.Socket;
 
 public class ConnectionSingleton implements IConnectionSingleton {
 
@@ -18,7 +19,7 @@ public class ConnectionSingleton implements IConnectionSingleton {
 	}
 
 	private ConnectionSingleton() {
-		IConnectionLogic conLog = new ConnectionLogic(this);
+		IConnectionLogic conLog = new ConnectionLogic(this, new Socket());
 		conLog.init();
 	}
 	
