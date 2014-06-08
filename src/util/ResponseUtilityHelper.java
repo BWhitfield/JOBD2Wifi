@@ -2,6 +2,8 @@ package util;
 
 import java.io.InputStream;
 
+import main.Constants;
+
 public class ResponseUtilityHelper implements IResponseUtilityHelper{
 
 	@Override
@@ -18,8 +20,10 @@ public class ResponseUtilityHelper implements IResponseUtilityHelper{
 
 	@Override
 	public String trimStringData(String fullResponse) {
-		// TODO Auto-generated method stub
-		return null;
+		fullResponse = fullResponse.replace(Constants.CR, "");
+		fullResponse = fullResponse.replace(Constants.LF, "");
+		fullResponse = fullResponse.replace(Constants.PROMPT, "");
+		return fullResponse;
 	}
 
 }
