@@ -4,7 +4,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 public interface IConnectionSingleton {
-	void seOutputStream(OutputStream outStream);
+	void setOutputStream(OutputStream outStream);
 
 	void setInputStream(InputStream inStream);
 

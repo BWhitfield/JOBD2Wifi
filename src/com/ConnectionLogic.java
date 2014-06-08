@@ -1,5 +1,6 @@
 package com;
 
+import java.io.IOException;
 import java.net.Socket;
 
 public class ConnectionLogic implements IConnectionLogic{
@@ -13,7 +14,13 @@ public class ConnectionLogic implements IConnectionLogic{
 	}
 
 	public void init() {
-		_connectionSingleton.getInputStream();
+		try {
+			_connectionSingleton.setInputStream(_socketAdapter.getInputStream());
+			_connectionSingleton.setOutputStream(_socketAdapter.getOutputStream());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 }

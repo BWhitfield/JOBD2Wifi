@@ -1,8 +1,12 @@
 package com;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.net.UnknownHostException;
+
+import main.Constants;
 
 public class ConnectionSingleton implements IConnectionSingleton {
 
@@ -10,6 +14,7 @@ public class ConnectionSingleton implements IConnectionSingleton {
 
 	private OutputStream _outStream;
 	private InputStream _inStream;
+	private IConnectionLogic _conLog;
 
 	public static IConnectionSingleton getInstance() {
 		if (instance == null) {
@@ -19,8 +24,14 @@ public class ConnectionSingleton implements IConnectionSingleton {
 	}
 
 	private ConnectionSingleton() {
-		IConnectionLogic conLog = new ConnectionLogic(this, new Socket());
-		conLog.init();
+		try {
+			_conLog = new ConnectionLogic(this, new Socket(Constants.ELM327_IP_ADDRESS, Constants.ELM327_IP_PORT));
+			_conLog.init();
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+		}
 	}
 	
 	public OutputStream getOutputStream(){
@@ -35,7 +46,7 @@ public class ConnectionSingleton implements IConnectionSingleton {
 		_inStream = inStream;
 	}
 	
-	public void seOutputStream(OutputStream outStream){
+	public void setOutputStream(OutputStream outStream){
 		_outStream = outStream;
 	}
 }
