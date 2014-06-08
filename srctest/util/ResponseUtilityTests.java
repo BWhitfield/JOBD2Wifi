@@ -2,17 +2,13 @@ package util;
 
 import java.io.IOException;
 import java.io.InputStream;
-
 import main.Constants;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
-
 import com.IConnectionSingleton;
 
 

@@ -1,11 +1,17 @@
 package util;
 
 import static org.junit.Assert.*;
+
+import java.io.IOException;
+import java.io.InputStream;
+
 import main.Constants;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.MockitoAnnotations;
+
+import static org.mockito.Mockito.*;
 
 public class ResponseUtilityHelperTests {
 

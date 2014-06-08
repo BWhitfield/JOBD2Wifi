@@ -1,21 +1,24 @@
 package util;
 
+import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 
 import main.Constants;
 
 public class ResponseUtilityHelper implements IResponseUtilityHelper{
-
+	private int currentLength;
+	
 	@Override
-	public byte[] getByteData(InputStream inStream) {
-		// TODO Auto-generated method stub
-		return null;
+	public byte[] getByteData(InputStream inStream) throws IOException {
+		byte[] bytes = new byte[1024];
+		currentLength = inStream.read(bytes);
+		return bytes;
 	}
 
 	@Override
 	public String getStringData(byte[] byteData) {
-		// TODO Auto-generated method stub
-		return null;
+		return new String(Arrays.copyOfRange(byteData, 0, currentLength)); 
 	}
 
 	@Override
