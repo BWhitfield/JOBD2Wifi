@@ -33,18 +33,6 @@ public class ResponseUtility implements IResponseUtility {
 		}
 		
 		return _responseUtilityHelper.trimStringData(response.toString());
-//		while (!readComplete) {
-//			byte[] bytes = null;
-//			
-//			int readLength = _connection.getInputStream().read(bytes);
-//			
-//			String data = new String(Arrays.copyOfRange(bytes, 0, readLength));
-//			responseBuilder.append(data);
-//
-//			if (data.contains(Constants.PROMPT)) {
-//				break;
-//			}
-//		}
 	}
 
 }
