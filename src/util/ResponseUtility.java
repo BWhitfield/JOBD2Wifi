@@ -1,16 +1,20 @@
 package util;
 
 import java.io.IOException;
-import java.util.Arrays;
-
 import main.Constants;
 
 import com.IConnectionSingleton;
+import com.ConnectionSingleton;
 
 public class ResponseUtility implements IResponseUtility {
 	
 	private IResponseUtilityHelper _responseUtilityHelper;
 	private IConnectionSingleton _connection;
+	
+	public ResponseUtility() 
+	{
+		this(new ResponseUtilityHelper(), ConnectionSingleton.getInstance());
+	}
 	
 	public ResponseUtility(IResponseUtilityHelper responseUtilityHelper, IConnectionSingleton connection) {
 		_responseUtilityHelper = responseUtilityHelper;
@@ -22,7 +26,7 @@ public class ResponseUtility implements IResponseUtility {
 		boolean reading = true;
 		StringBuilder response = new StringBuilder();
 		
-		while(reading){
+		while(reading){// TODO test this
 			byte[] byteData = _responseUtilityHelper.getByteData(_connection.getInputStream());
 			String stringData = _responseUtilityHelper.getStringData(byteData);
 			response.append(stringData);

@@ -11,13 +11,13 @@ import main.Constants;
 
 public class ConnectionSingleton implements IConnectionSingleton {
 
-	private static IConnectionSingleton instance = null;
+	private static ConnectionSingleton instance = null;
 
 	private OutputStream _outStream;
 	private InputStream _inStream;
 	private IConnectionLogic _conLog;
 
-	public static IConnectionSingleton getInstance() {
+	public static ConnectionSingleton getInstance() {
 		if (instance == null) 
 			instance = new ConnectionSingleton();
 		
