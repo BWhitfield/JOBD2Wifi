@@ -17,9 +17,15 @@ public class Commander implements ICommander{
 	}
 
 	@Override
-	public int obd2(String mode, String command) throws IOException {
+	public String obd2(String mode, String command) throws IOException {
 		_connection.getOutputStream().write((mode + command + Constants.CR_LF).getBytes());
-		return Integer.parseInt(_responseUtility.getResponse());
+		return _responseUtility.getResponse();
+	}
+
+	@Override
+	public String at(String command) throws IOException {
+		_connection.getOutputStream().write(("AT" + command + Constants.CR_LF).getBytes());
+		return _responseUtility.getResponse();
 	}
 
 }

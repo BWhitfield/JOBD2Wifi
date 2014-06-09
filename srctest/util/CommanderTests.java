@@ -22,10 +22,27 @@ public class CommanderTests{
 	ICommander _testObject;
 	@Mock IConnectionSingleton _connection;
 	@Mock IResponseUtility _responseUtility;
+	
 	@Before
 	public void setup(){
 		MockitoAnnotations.initMocks(this);
 		_testObject = new Commander(_connection, _responseUtility);
+	}
+	
+	@Test
+	public void at() throws IOException{
+		OutputStream outStream = mock(OutputStream.class);
+		String response = "response";
+		
+		when(_connection.getOutputStream()).thenReturn(outStream);
+		when(_responseUtility.getResponse()).thenReturn(response);
+		
+		String actual = _testObject.at("I");
+		
+		verify(_connection).getOutputStream();
+		verify(outStream).write(("ATI" + Constants.CR_LF).getBytes());
+		
+		assertEquals(response, actual);
 	}
 	
 	@Test
@@ -36,11 +53,11 @@ public class CommanderTests{
 		when(_connection.getOutputStream()).thenReturn(outStream);
 		when(_responseUtility.getResponse()).thenReturn(response);
 		
-		int actual = _testObject.obd2("01","0C");
+		String actual = _testObject.obd2("01","0C");
 		
 		verify(_connection).getOutputStream();
 		verify(outStream).write(("010C" + Constants.CR_LF).getBytes());
 		
-		assertEquals(1234, actual);
+		assertEquals(response, actual);
 	}
 }
