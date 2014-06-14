@@ -4,13 +4,18 @@ import java.io.IOException;
 
 import main.Constants;
 
+import com.ConnectionSingleton;
 import com.IConnectionSingleton;
 
 public class Commander implements ICommander{
 
 	private IConnectionSingleton _connection;
 	private IResponseUtility _responseUtility;
-
+	
+	public Commander(){
+		this(ConnectionSingleton.getInstance(), new ResponseUtility());
+	}
+	
 	public Commander(IConnectionSingleton connection, IResponseUtility responseUtility) {
 		_connection = connection;
 		_responseUtility = responseUtility;
