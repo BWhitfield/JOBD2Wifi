@@ -6,19 +6,12 @@ Utility Library for connecting to a wireless ELM327
 # Dependencies
 
 ELM327 wifi adapter (These are like 30 bucks)
+
 Java
 
 # How to use this lib
 
-'''
-package main;
 
-import java.io.IOException;
-
-import util.Commander;
-import util.ICommander;
-
-public class launch {
 
 	public static void main(String[] args) {
 		ICommander commander = new Commander();
@@ -40,5 +33,6 @@ public class launch {
 			e.printStackTrace(); //kaboom
 		}
 	}
-}
-'''
+
+
+
