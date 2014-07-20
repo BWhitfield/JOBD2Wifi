@@ -8,6 +8,7 @@ import java.io.OutputStream;
 
 import main.Constants;
 
+import org.apache.logging.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -22,11 +23,14 @@ public class CommanderTests{
 	ICommander _testObject;
 	@Mock IConnectionSingleton _connection;
 	@Mock IResponseUtility _responseUtility;
+	@Mock Logger _logger;
 	
 	@Before
 	public void setup(){
 		MockitoAnnotations.initMocks(this);
-		_testObject = new Commander(_connection, _responseUtility);
+		_testObject = new Commander(_connection, _responseUtility, _logger);
+		
+		when(_connection.getOutputStream()).thenReturn(mock(OutputStream.class));
 	}
 	
 	@Test
@@ -60,4 +64,59 @@ public class CommanderTests{
 		
 		assertEquals(response, actual);
 	}
+	
+	@Test
+	public void obd2_logs_errors_writing_to_output_stream() throws Exception{
+		OutputStream outStream = mock(OutputStream.class);
+		
+		when(_connection.getOutputStream()).thenReturn(outStream);
+		doThrow(new IOException()).when(outStream).write(any(byte[].class));
+		
+		String actual = _testObject.obd2("01","0C");
+		
+		verify(_logger).error("Failed writing to output stream");
+		
+		assertEquals(null, actual);
+	}
+
+	@Test
+	public void obd2_logs_errors_getting_response() throws Exception{
+		when(_responseUtility.getResponse()).thenThrow(new IOException());
+		
+		String actual = _testObject.obd2("01","0C");
+		
+		verify(_logger).error("Failed getting response");
+		
+		assertEquals(null, actual);
+	}
+	
+	@Test
+	public void at_logs_errors_writing_to_output_stream() throws Exception{
+		OutputStream outStream = mock(OutputStream.class);
+		
+		when(_connection.getOutputStream()).thenReturn(outStream);
+		doThrow(new IOException()).when(outStream).write(any(byte[].class));
+		
+		String actual = _testObject.at("I");
+		
+		verify(_logger).error("Failed writing to output stream");
+		
+		assertEquals(null, actual);
+	}
+	
+	@Test
+	public void at_logs_errors_getting_response() throws Exception{
+		when(_responseUtility.getResponse()).thenThrow(new IOException());
+		
+		String actual = _testObject.at("foobar");
+		
+		verify(_logger).error("Failed getting response");
+		
+		assertEquals(null, actual);
+	}
+	
+	
+	
+	
+	
 }
